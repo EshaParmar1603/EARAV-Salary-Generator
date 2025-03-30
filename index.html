@@ -1,167 +1,247 @@
-<!DOCTYPE html><html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>My Salary Slip</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.13/jspdf.plugin.autotable.min.js"></script>
+
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
-            margin: 0;
-            padding: 0;
-        }
-        .header {
-            background-color: #0a3d62;
-            color: white;
-            padding: 15px;
-            text-align: center;
-            font-size: 20px;
-            font-weight: bold;
-        }
-        .container {
-            max-width: 900px;
-            margin: 30px auto;
-            padding: 20px;
-            background-color: white;
-            border-radius: 5px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            border: 2px solid #0a3d62;
-        }
-        .form-group {
-            margin-bottom: 15px;
-            text-align: left;
-        }
-        .form-group label {
-            font-weight: bold;
-            display: block;
-        }
-        .form-group input {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        .btn {
-            width: 100%;
-            padding: 10px;
-            background-color: #0a3d62;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            border-radius: 5px;
-        }
-        .btn:hover {
-            background-color: #082e4d;
-        }
-        .salary-slip {
-            display: flex;
-            flex-direction: column;
-            border: 1px solid black;
-            margin-top: 20px;
-            padding: 10px;
-        }
-        .salary-slip div {
-            padding: 5px;
-            border-bottom: 1px solid black;
-        }
-        .salary-slip div:last-child {
-            border-bottom: none;
-        }
-        .salary-label {
-            font-weight: bold;
-        }
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f5f5f5;
+        margin: 0;
+        padding: 0;
+      }
+      .header {
+        background-color: #0a3d62;
+        color: white;
+        padding: 15px;
+        text-align: center;
+        font-size: 20px;
+        font-weight: bold;
+      }
+      .container {
+        max-width: 900px;
+        margin: 30px auto;
+        padding: 20px;
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        border: 2px solid #0a3d62;
+      }
+      .form-group {
+        margin-bottom: 15px;
+        text-align: left;
+      }
+      .form-group label {
+        font-weight: bold;
+        display: block;
+      }
+      .form-group input {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+      }
+      .btn {
+        width: 100%;
+        padding: 10px;
+        background-color: #0a3d62;
+        color: white;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+      }
+      .btn:hover {
+        background-color: #082e4d;
+      }
+      .salary-slip {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid black;
+        margin-top: 20px;
+        padding: 10px;
+      }
+      .salary-slip div {
+        padding: 5px;
+        border-bottom: 1px solid black;
+      }
+      .salary-slip div:last-child {
+        border-bottom: none;
+      }
+      .salary-label {
+        font-weight: bold;
+      }
+      .low-attendance {
+        color: red;
+        font-weight: bold;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div class="header">
       <h1>EARAV</h1>
       <h2>My Salary Slip</h2>
     </div>
     <div class="container">
-        <div class="form-group">
-            <label>Employee ID</label>
-            <input type="text" id="employeeId">
-        </div>
-        <div class="form-group">
-            <label>Employee Name</label>
-            <input type="text" id="name">
-        </div>
-        <div class="form-group">
-            <label>Designation</label>
-            <input type="text" id="designation">
-        </div>
-        <div class="form-group">
-            <label>Department</label>
-            <input type="text" id="department">
-        </div>
-        <div class="form-group">
-            <label>Branch</label>
-            <input type="text" id="branch">
-        </div>
-        <div class="form-group">
-            <label>PAN Number</label>
-            <input type="text" id="panNumber">
-        </div>
-        <div class="form-group">
-            <label>Basic Salary</label>
-            <input type="number" id="basicSalary">
-        </div>
-        <button class="btn" onclick="generateSlip()">Generate Salary Slip</button>
-        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button class="btn" onclick="downloadPDF()">Download PDF</button>
-        <h3>Generated Salary Slip</h3>
-    <div id="salarySlip" class="salary-slip"></div>
-</div>
+      <div class="form-group">
+        <label>Employee ID</label>
+        <input type="text" id="employeeId" />
+      </div>
+      <div class="form-group">
+        <label>Employee Name</label>
+        <input type="text" id="name" />
+      </div>
+      <div class="form-group">
+        <label>Designation</label>
+        <input type="text" id="designation" />
+      </div>
+      <div class="form-group">
+        <label>Department</label>
+        <input type="text" id="department" />
+      </div>
+      <div class="form-group">
+        <label>Branch</label>
+        <input type="text" id="branch" />
+      </div>
+      <div class="form-group">
+        <label>PAN Number</label>
+        <input type="text" id="panNumber" />
+      </div>
+      <div class="form-group">
+        <label>Basic Salary</label>
+        <input type="number" id="basicSalary" />
+      </div>
+      <div class="form-group">
+        <label>Total Working Days</label>
+        <input type="number" id="totalDays" />
+      </div>
+      <div class="form-group">
+        <label>Days Present</label>
+        <input type="number" id="presentDays" />
+      </div>
+      <button class="btn" onclick="generateSlip()">Generate Salary Slip</button>
+      <h3>Generated Salary Slip</h3>
+      <div id="salarySlip" class="salary-slip"></div>
+    </div>
 
-<script>
-   function generateSlip() {
+    <script>
+      function generateSlip() {
         let employeeId = document.getElementById("employeeId").value;
         let name = document.getElementById("name").value;
         let designation = document.getElementById("designation").value;
         let department = document.getElementById("department").value;
         let branch = document.getElementById("branch").value;
         let panNumber = document.getElementById("panNumber").value;
-        let basicSalary = parseFloat(document.getElementById("basicSalary").value);
-        
-        if (!employeeId || !name || !designation || !department || !branch || !panNumber || isNaN(basicSalary) || basicSalary <= 0) {
-            alert("Please fill all fields correctly with a valid salary amount");
-            return;
+        let basicSalary = parseFloat(
+          document.getElementById("basicSalary").value
+        );
+        let totalDays = parseInt(document.getElementById("totalDays").value);
+        let presentDays = parseInt(
+          document.getElementById("presentDays").value
+        );
+
+        if (
+          !employeeId ||
+          !name ||
+          !designation ||
+          !department ||
+          !branch ||
+          !panNumber ||
+          isNaN(basicSalary) ||
+          basicSalary <= 0 ||
+          isNaN(totalDays) ||
+          isNaN(presentDays) ||
+          presentDays > totalDays
+        ) {
+          alert("Please fill all fields correctly");
+          return;
         }
-        
+
         let hra = basicSalary * 0.2;
         let da = basicSalary * 0.1;
-        let pf = basicSalary * 0.12;  
-        let gst = basicSalary * 0.18; 
+        let pf = basicSalary * 0.12;
+        let netSalary = basicSalary + hra + da - pf;
 
-        let netSalary = basicSalary - gst;
-        
+        let attendancePercentage = (presentDays / totalDays) * 100;
+        let attendanceClass = attendancePercentage < 75 ? "low-attendance" : "";
+
         let salarySlip = document.getElementById("salarySlip");
         salarySlip.innerHTML = `
-            <div><span class="salary-label">Employee ID:</span> ${employeeId}</div>
-            <div><span class="salary-label">Name:</span> ${name}</div>
-            <div><span class="salary-label">Designation:</span> ${designation}</div>
-            <div><span class="salary-label">Department:</span> ${department}</div>
-            <div><span class="salary-label">Branch:</span> ${branch}</div>
-            <div><span class="salary-label">PAN Number:</span> ${panNumber}</div>
-            <div><span class="salary-label">Basic Salary:</span> ₹${basicSalary.toFixed(2)}</div>
-            <div><span class="salary-label">HRA (20%):</span> ₹${hra.toFixed(2)}</div>
-            <div><span class="salary-label">DA (10%):</span> ₹${da.toFixed(2)}</div>
-            <div><span class="salary-label">GST (18%):</span> ₹${gst.toFixed(2)}</div>
-            <div><span class="salary-label">PF (12%):</span> -₹${pf.toFixed(2)}</div>
-            <div><span class="salary-label">Net Salary:</span> <b>₹${netSalary.toFixed(2)}</b></div>
-        `;
-    }
+                <div><span class="salary-label">Employee ID:</span> ${employeeId}</div>
+                <div><span class="salary-label">Name:</span> ${name}</div>
+                <div><span class="salary-label">Designation:</span> ${designation}</div>
+                <div><span class="salary-label">Department:</span> ${department}</div>
+                <div><span class="salary-label">Branch:</span> ${branch}</div>
+                <div><span class="salary-label">PAN Number:</span> ${panNumber}</div>
+                <div><span class="salary-label">Attendance:</span> <span class="${attendanceClass}">${attendancePercentage.toFixed(2)}%</span></div>
+                <div><span class="salary-label">Basic Salary:</span> ₹${basicSalary.toFixed(2)}</div>
+                <div><span class="salary-label">HRA (20%):</span> ₹${hra.toFixed(2)}</div>
+                <div><span class="salary-label">DA (10%):</span> ₹${da.toFixed(2)}</div>
+                <div><span class="salary-label">PF (12%):</span> -₹${pf.toFixed(2)}</div>
+                <div><span class="salary-label">Net Salary:</span> <b>₹${netSalary.toFixed(2)}</b></div>
+                <button class="btn" onclick="downloadPDF()">Download PDF</button>
+            `;
+      }
 
-    function downloadPDF() {
+      function downloadPDF() {
         const { jsPDF } = window.jspdf;
         let doc = new jsPDF();
-        let salarySlipContent = document.getElementById("salarySlip").innerText;
-        doc.text(salarySlipContent, 10, 10);
-        doc.save("salary_slip.pdf");
-    }
-</script>
 
-</body>
+        doc.setFontSize(18);
+        doc.text("EARAV", 15, 10);
+        doc.setFontSize(14);
+        doc.text("My Salary Slip", 15, 20);
+
+        let employeeId = document.getElementById("employeeId").value;
+        let name = document.getElementById("name").value;
+        let designation = document.getElementById("designation").value;
+        let department = document.getElementById("department").value;
+        let branch = document.getElementById("branch").value;
+        let panNumber = document.getElementById("panNumber").value;
+        let basicSalary = parseFloat(
+          document.getElementById("basicSalary").value
+        ).toFixed(2);
+        let totalDays = parseInt(document.getElementById("totalDays").value);
+        let presentDays = parseInt(
+          document.getElementById("presentDays").value
+        );
+
+        let hra = (basicSalary * 0.2).toFixed(2);
+        let da = (basicSalary * 0.1).toFixed(2);
+        let pf = (basicSalary * 0.12).toFixed(2);
+        let netSalary = (basicSalary - pf).toFixed(2);
+        let attendancePercentage = ((presentDays / totalDays) * 100).toFixed(2);
+
+        let tableData = [
+          ["Employee ID", employeeId],
+          ["Name", name],
+          ["Designation", designation],
+          ["Department", department],
+          ["Branch", branch],
+          ["PAN Number", panNumber],
+          ["Attendance (%)", `${attendancePercentage}%`],
+          ["Basic Salary", `₹${basicSalary}`],
+          ["HRA (20%)", `₹${hra}`],
+          ["DA (10%)", `₹${da}`],
+          ["PF (12%)", `-₹${pf}`],
+          ["Net Salary", `₹${netSalary}`],
+        ];
+          
+        doc.autoTable({
+          startY: 30,
+          head: [["Detail", "Value"]],
+          body: tableData,
+          theme: "grid",
+          headStyles: { fillColor: [10, 61, 98] },
+          alternateRowStyles: { fillColor: [240, 240, 240] },
+        });
+
+        doc.save("salary_slip.pdf");
+      }
+    </script>
+  </body>
 </html>
